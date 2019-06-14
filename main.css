@@ -1,0 +1,125 @@
+body{
+    width: 100vw;
+    height: 100vh;
+}
+#videoElement{
+    position: absolute;
+    left: 50%;
+    transform: rotateY(180deg) translate(50%, 0);
+    -webkit-transform: rotateY(180deg) translate(50%, 0);
+    -moz-transform: rotateY(180deg)translate(50%, 0);
+    width: auto;
+    height: 100vh;
+}
+
+#canvas{
+    position: absolute;
+    left: 50%;
+    transform: rotateY(180deg) translate(50%, 0);
+    -webkit-transform: rotateY(180deg) translate(50%, 0);
+    -moz-transform: rotateY(180deg)translate(50%, 0);
+    width: auto;
+    height: 100vh;
+    z-index: 10;
+}
+
+/* #arZone{
+    width: 30vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    background-color: antiquewhite;
+} */
+
+#mainContainer{
+    width: 100%
+}
+.flex-container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+/* .flex-row {
+
+  } */
+
+.flex-row > img {
+    width: auto;
+    height: 25vh;
+}
+
+/* #cameraZone{
+    position: absolute;
+    display: inline-block;
+    width: 100vw;
+    height: 100vh;
+} */
+#topRow{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 25%;
+}
+
+#centerRow{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 30%;
+}
+#bottomRow{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 25%;
+    bottom: 0;
+}
+
+
+.airmax{
+    width: auto;
+    height: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+    z-index: 150;
+}
+
+#qr{
+    height: 100%;
+    z-index: 150;
+}
+
+#marker{
+    height: 100%;
+    z-index: 150;
+}
+
+#airmax1:focus {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+  
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+  
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
