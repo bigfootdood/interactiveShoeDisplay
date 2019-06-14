@@ -6,6 +6,7 @@ let video;
 let net;
 let pointerX = 0;
 let pointerY = 0;
+let tracker = 10
 
 let pointer = new Image();
 pointer.src = 'assets/cursor.png';
@@ -15,7 +16,16 @@ var requestAnimationFrame = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.msRequestAnimationFrame;
 
-console.log("width:" + box.style.width)
+
+//clicking Hiro Marker will change where the pointer is tracking from
+document.getElementById("marker").addEventListener("click", toggleTracker);
+function toggleTracker(){
+    if (tracker === 0) {
+        tracker = 10;
+    }else{
+        tracker = 0
+    }
+}
 
 
 async function setupCamera() {
@@ -65,13 +75,12 @@ function render(video, net) {
             //hide Logo page
             document.getElementById("coverPage").style.display = "none";
             //update pointer coords
-            pointerX = pose[0].keypoints[10].position.x;
-            pointerY = pose[0].keypoints[10].position.y;
+            pointerX = pose[0].keypoints[tracker].position.x;
+            pointerY = pose[0].keypoints[tracker].position.y;
             await animateHands();
         } else {
             //show logo page
             document.getElementById("coverPage").style.display = "block";
-            console.log("NOT IN FIELD OF VIEW");
             //clear canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
@@ -98,27 +107,19 @@ function selectBoxes() {
     var fourthHeight = canvas.height / 4;
 
     if (pointerY < fourthHeight) {
-        console.log("TOP");
         if (pointerX < thirdWidth) {
-            console.log("RIGHT");
             shoeSelection(3);
         } else if (pointerX > thirdWidth && pointerX < (canvas.width - thirdWidth)) {
-            console.log("MIDDLE");
             shoeSelection(2);
         } else {
-            console.log("LEFT");
             shoeSelection(1);
         }
     } else if (pointerY > (canvas.height - fourthHeight)) {
-        console.log("BOTTOM")
         if (pointerX < thirdWidth) {
-            console.log("RIGHT");
             shoeSelection(6);
         } else if (pointerX > thirdWidth && pointerX < (canvas.width - thirdWidth)) {
-            console.log("MIDDLE");
             shoeSelection(5);
         } else {
-            console.log("LEFT");
             shoeSelection(4);
         }
     }
@@ -126,8 +127,6 @@ function selectBoxes() {
 
 //animate shoe then trigger corresponding QR code
 function shoeSelection(shoe) {
-    console.log("SHOE :" + shoe)
-
     //jiggle selected shoe
     let shoeElem = document.getElementById("airmax" + shoe);
     shoeElem.style.WebkitAnimation = "shake 0.82s cubic-bezier(.36,.07,.19,.97) both";
@@ -138,7 +137,7 @@ function shoeSelection(shoe) {
     shoeElem.parentNode.replaceChild(newone, shoeElem);
 
     //update shoe QR code
-
+    document.getElementById("qr").src = "assets/" + shoe + ".png"
 }
 
 
@@ -149,7 +148,6 @@ async function main() {
     video.height = video.videoHeight;
     canvas.height = video.height;
     canvas.width = video.width;
-    // document.getElementsByClassName('mainContainer').setAttribute("style","width: 1280px");
     render(video, net);
 }
 
