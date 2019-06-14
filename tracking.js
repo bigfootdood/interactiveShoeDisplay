@@ -62,15 +62,19 @@ function render(video, net) {
         })
         //Check if there is a person present
         if (pose[0]) {
-            console.log("y position: " + pose[0].keypoints[10].position.y);
+            //hide Logo page
+            document.getElementById("coverPage").style.display = "none";
+            //update pointer coords
             pointerX = pose[0].keypoints[10].position.x;
             pointerY = pose[0].keypoints[10].position.y;
+            await animateHands();
         } else {
+            //show logo page
+            document.getElementById("coverPage").style.display = "block";
             console.log("NOT IN FIELD OF VIEW");
             //clear canvas
             context.clearRect(0, 0, canvas.width, canvas.height);
         }
-        await animateHands();
         requestAnimationFrame(detect);
     }
     detect();
@@ -81,7 +85,6 @@ async function animateHands() {
     //clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
     //draw circle
-    // context.drawImage(pointer, pointerX, pointerY);
     context.beginPath();
     context.arc(pointerX, pointerY, 15, 0, 2 * Math.PI);
     context.stroke();
@@ -93,7 +96,6 @@ async function animateHands() {
 function selectBoxes() {
     var thirdWidth = canvas.width / 3;
     var fourthHeight = canvas.height / 4;
-
 
     if (pointerY < fourthHeight) {
         console.log("TOP");
